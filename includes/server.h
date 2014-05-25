@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/25 19:25:40 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 19:27:21 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/25 22:51:52 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define BUFF_SIZE (2000)
 # define MAX_CLIENTS (42)
 
-# define NO_CHAN (0)
+# define NO_CHAN ("Lobby")
 # define MUSIC ("Music")
 # define CODING ("Coding")
 # define GAMES ("Games")

@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/25 18:24:34 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 18:28:06 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/25 20:57:23 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_server		*init_server(char *port)
 	serv->sock = socket(AF_INET, SOCK_STREAM, 0);
 	ft_assert(serv->sock != -1, "Socket Error\n");
 	serv->sin.sin_family = AF_INET;
-	serv->sin.sin_addr.s_addr = INADDR_ANY;
+	serv->sin.sin_addr.s_addr = htonl(INADDR_ANY);
 	serv->sin.sin_port = htons(ft_atoi(port));
 	if (bind(serv->sock, (t_sockaddr *)&serv->sin, sizeof(serv->sin)) == -1)
 		ft_exit("Bind Error\n");

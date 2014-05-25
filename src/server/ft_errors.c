@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/25 19:20:51 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 19:20:51 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/25 22:34:29 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,20 @@ void			ft_assert(int test, char *str)
 		ft_exit(str);
 }
 
-void			send_client(int sock, char *str, char *color)
+void			send_client(int sock, char *str, char *color, char ok)
 {
+	static char		*msg = NULL;
+
+	msg = (msg ? msg : ft_strdup(""));
 	if (color)
-		send(sock, color, ft_strlen(color), 0);
-	send(sock, str, ft_strlen(str), 0);
+		msg = ft_strcleanjoin(msg, color);
+	msg = ft_strcleanjoin(msg, str);
 	if (color)
-		send(sock, NONE, ft_strlen(NONE), 0);
+		msg = ft_strcleanjoin(msg, NONE);
+	if (ok)
+	{
+		send(sock, msg, ft_strlen(msg), 0);
+		free(msg);
+		msg = NULL;
+	}
 }

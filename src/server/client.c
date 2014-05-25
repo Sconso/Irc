@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/25 19:08:31 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 19:20:07 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/25 22:21:23 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void				kill_client(t_server *srv, int i)
 	printf("%sClient %s disconnected.%s\n", DRED, srv->cl[i]->nickname, NONE);
 	send_all_but_one(srv, i, "Client ", DRED);
 	send_all_but_one(srv, i, srv->cl[i]->nickname, DRED);
-	send_all_but_one(srv, i, " disconnected.\n", DRED);
+	send_all_but_one(srv, i, " disconnected.", DRED);
+	send_all_but_one(srv, i, "\0", NULL);
 	close(srv->cl[i]->csock);
 	free(srv->cl[i]->nickname);
 	if (i < srv->actual - 1)
@@ -77,9 +78,20 @@ t_clients			*new_client(t_server *srv)
 void				send_all_but_one(t_server *srv, int one, char *msg,
 									char *color)
 {
-	int		i;
-	int		sock;
+	static char		*str = NULL;
+	int				i;
+	int				sock;
 
+	if (*msg)
+	{
+		str = (str ? str : ft_strdup(""));
+		if (color)
+			str = ft_strcleanjoin(str, color);
+		str = ft_strcleanjoin(str, msg);
+		if (color)
+			str = ft_strcleanjoin(str, NONE);
+		return ;
+	}
 	i = -1;
 	while (++i < srv->actual)
 	{
@@ -87,6 +99,8 @@ void				send_all_but_one(t_server *srv, int one, char *msg,
 		if (srv->cl[i]->chan != srv->cl[one]->chan)
 			continue ;
 		if (i != one)
-			send_client(sock, msg, color);
+			send_client(sock, str, color, 1);
 	}
+	free(str);
+	str = NULL;
 }

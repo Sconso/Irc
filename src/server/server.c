@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/23 19:02:04 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 19:22:30 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/25 22:38:41 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void		client_loop(t_server *srv, fd_set *rdfs)
 			{
 				if (msg)
 					free(msg);
-				send_client(srv->cl[i]->csock, "\033[1A\r\033[K", NULL);
+				send_client(srv->cl[i]->csock, "\033[1A\r\033[K", NULL, 1);
 				kill_client(srv, i);
 			}
 			else

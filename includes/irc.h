@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/25 19:25:28 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 19:25:28 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/25 21:41:42 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct in_addr			t_in_addr;
 */
 void	ft_assert(int test, char *str);
 void	ft_exit(char *str);
-void	send_client(int sock, char *str, char *color);
+void	send_client(int sock, char *str, char *color, char ok);
 
 /*
 ** get_message.c

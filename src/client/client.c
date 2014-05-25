@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/25 19:27:52 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 19:38:20 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/25 23:44:08 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <get_next_line.h>
 #include <ft_fc_conversion.h>
 #include <ft_fc_str.h>
+#include <ft_fc_print.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <stdlib.h>
@@ -35,7 +36,12 @@ static void			client_in(t_socket sock)
 
 	if ((message = get_next_line(STDIN_FILENO)) != NULL)
 	{
-		printf("%s\n", message);
+		if (!strcmp(message, "/exit") || !strcmp(message, "/quit"))
+		{
+			free(message);
+			ft_exit("Client exited\n");
+		}
+		message = ft_strcleanjoin(message, "\n");
 		ft_send(sock, message);
 		free(message);
 	}
@@ -45,17 +51,21 @@ static void			client_out(t_socket sock)
 {
 	char			*message;
 
-	while ((message = get_message(sock)) != NULL)
+	if ((message = get_message(sock)) != NULL)
 	{
-		printf("%s\n", message);
+		printf("\r\033[K%s\n", message);
 		free(message);
 	}
+	else
+		ft_exit("Server disconnected\n");
 }
 
 void				be_client(char *ip, int port)
 {
 	t_socket		sock;
 	fd_set			rdfs;
+	char			*ask;
+	char			*prompt;
 
 	sock = init_connection(ip, port);
 	while (1)
@@ -64,7 +74,16 @@ void				be_client(char *ip, int port)
 		if (FD_ISSET(STDIN_FILENO, &rdfs))
 			client_in(sock);
 		else if (FD_ISSET(sock, &rdfs))
+		{
 			client_out(sock);
+			ask = ft_strdup("/gp\n");
+			ft_send(sock, ask);
+			free(ask);
+			prompt = get_message(sock);
+			ft_putstr("\n");
+			ft_putstr(prompt);
+			free(prompt);
+		}
 	}
 }
 
