@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/23 19:02:04 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 14:48:33 by Myrkskog         ###   ########.fr       */
+/*   Updated: 2014/05/25 15:05:10 by Myrkskog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,47 @@ void		me_cmd(t_server *srv, int active, char *message)
 	printf("\033[1;37m%s%s\033[0m\n", srv->clients[active]->nickname, message);
 }
 
+void		msg_cmd(t_server *srv, int actual, char *cmd)
+{
+	char	*name;
+	char	*msg;
+	int		i;
+	int		sock;
+
+	i = -1;
+	while (cmd[++i] && cmd[i] != ' ')
+		;
+	sock = srv->clients[actual]->csock;
+	if (!cmd[i])
+	{
+		send_client(sock, "Usage : /msg <name> <message>\n", DRED);
+		return ;
+	}
+	cmd[i] = 0;
+	name = cmd;
+	msg = &cmd[i + 1];
+	i = -1;
+	while (++i < srv->actual)
+	{
+		if (!ft_strcmp(srv->clients[i]->nickname, name) && i != actual)
+		{
+			sock = srv->clients[i]->csock;
+			send_client(sock, srv->clients[actual]->nickname, DBLUE);
+			send_client(sock, " says : ", DBLUE);
+			send_client(sock, msg, NULL);
+			send_client(sock, "\n", NULL);
+			sock = srv->clients[actual]->csock;
+			send_client(sock, srv->clients[actual]->nickname, DGREEN);
+			send_client(sock, " says : ", DBLUE);
+			send_client(sock, msg, NULL);
+			send_client(sock, "\n", NULL);
+			return ;
+		}
+	}
+	send_client(sock, name, DRED);
+	send_client(sock, " isn't connected...\n", DRED);
+}
+
 void		srv_cmds(t_server *srv, char *cmd, int i)
 {
 	if (!ft_strncmp(cmd, "/nickname ", 9))
@@ -277,6 +318,8 @@ void		srv_cmds(t_server *srv, char *cmd, int i)
 		who_cmd(srv, i);
 	else if (!ft_strncmp(cmd, "/me ", 3))
 		me_cmd(srv, i, &cmd[3]);
+	else if (!ft_strncmp(cmd, "/msg ", 4))
+		msg_cmd(srv, i, &cmd[5]);
 	else
 		send_client(srv->clients[i]->csock, "Bad command.\n", DRED);
 }
@@ -317,7 +360,7 @@ void			print_message(t_server *srv, int i, char **message)
 		free(*message);
 		return ;
 	}
-	if ((*message)[0] == '/')
+	if ((*message)[0] == '/' && (*message)[1] != '/')
 	{
 		srv_cmds(srv, *message, i);
 		free(*message);
