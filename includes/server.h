@@ -6,7 +6,7 @@
 /*   By: Myrkskog <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/24 20:39:22 by Myrkskog          #+#    #+#             */
-/*   Updated: 2014/05/25 10:30:08 by Myrkskog         ###   ########.fr       */
+/*   Updated: 2014/05/25 17:14:21 by Myrkskog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SERVER_H
 
 # include <irc.h>
-# define BUFF_SIZE (200)
+# define BUFF_SIZE (2000)
 # define MAX_CLIENTS (42)
 
 # define NO_CHAN (0)
@@ -40,8 +40,4 @@ typedef struct			s_server
 	t_clients			**clients;
 }						t_server;
 
-/*
-** get_message.c
-*/
-char	*get_message(int const fd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/23 19:02:04 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 15:05:10 by Myrkskog         ###   ########.fr       */
+/*   Updated: 2014/05/25 17:12:19 by Myrkskog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,29 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <colors.h>
+
+char		*cjoin(char *s1, char const *s2, char dofree)
+{
+	int		size;
+	int		i;
+	char	*str;
+	char	*tobefree;
+
+	if (!s1 || !s2)
+		return (NULL);
+	size = ft_strlen(s1) + ft_strlen(s2);
+	str = (char *)malloc((size + 1) * sizeof(*str));
+	i = -1;
+	tobefree = s1;
+	while (*s1)
+		str[++i] = *s1++;
+	while (*s2)
+		str[++i] = *s2++;
+	str[++i] = 0;
+	if (dofree)
+		free(tobefree);
+	return (str);
+}
 
 void		print_chan(t_server *srv, char *chan, int cl)
 {
@@ -46,6 +69,33 @@ void		welcome(t_server *srv, int active)
 	int		cl;
 
 	cl = srv->clients[active]->csock;
+
+/*	msg = cjoin("", "\033[1;32m\tWelcome to SC_IRC ", 0);
+	msg = cjoin(msg, srv->clients[active]->nickname, 1);
+	msg = cjoin(msg, "\033[0m\n\nBe polite, respectfull and don't panic.\n\n", 1);
+	msg = cjoin(msg, "\033[1;31mCOMMANDS :\n", 1);
+	msg = cjoin(msg, "\033[1;32m\t/n, /nick, /nickname <name> : ", 1);
+	msg = cjoin(msg, "\033[0mSelect a new nickname.\n", 1);
+	msg = cjoin(msg, "\033[1;32m\t/join <chan> : ", 1);
+	msg = cjoin(msg, "\033[0mJoin a chan.\n", 1);
+	msg = cjoin(msg, "\033[1;32m\t/leave : ", 1);
+	msg = cjoin(msg, "\033[0mLeave the current chan.\n", 1);
+	msg = cjoin(msg, "\033[1;32m\t/who : ", 1);
+	msg = cjoin(msg, "\033[0mShow who is on this chan.\n", 1);
+	msg = cjoin(msg, "\033[1;32m\t/me <message> : ", 1);
+	msg = cjoin(msg, "\033[0mSend a roleplay formated message\n", 1);
+	msg = cjoin(msg, "\033[1;32m\t/exit, /quit : ", 1);
+	msg = cjoin(msg, "\033[0mLeave the client.\n", 1);
+	msg = cjoin(msg, "\033[1;32m\t/help : ", 1);
+	msg = cjoin(msg, "\033[0mPrint this message.\n", 1);
+	msg = cjoin(msg, "\033[1;31m\nActive Chans :\n", 1);
+	send_client(cl, msg, NULL);
+	free(msg);*/
+/*	print_chan(srv, MUSIC, cl);
+	print_chan(srv, CODING, cl);
+	print_chan(srv, GAMES, cl);
+	send_client(cl, "\nAnd now... Have fun !\n", NULL);*/
+
 	send_client(cl, "\tWelcome to SC_IRC ", DGREEN);
 	send_client(cl, srv->clients[active]->nickname, DGREEN);
 	send_client(cl, "\n\nBe polite, respectfull and don't panic.\n\n", NULL);
@@ -68,7 +118,7 @@ void		welcome(t_server *srv, int active)
 	print_chan(srv, MUSIC, cl);
 	print_chan(srv, CODING, cl);
 	print_chan(srv, GAMES, cl);
-	send_client(cl, "\nAnd now... Have fun !\n", NULL);
+	send_client(cl, "\nAnd now... Have fun !\n", "\0");
 }
 
 int			check_validity(int ac, char **av)

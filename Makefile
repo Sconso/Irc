@@ -6,7 +6,7 @@
 #    By: sconso <sconso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/12 18:13:08 by sconso            #+#    #+#              #
-#    Updated: 2014/05/25 07:32:27 by Myrkskog         ###   ########.fr        #
+#    Updated: 2014/05/25 16:08:26 by Myrkskog         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,7 +19,9 @@ DFLAGS = -pedantic -g -ggdb
 INC = -I includes/ -I libft/includes/
 LFLAGS = -L libft/ -lft
 
-C_FILES = src/client/client.c
+C_FILES = 	src/client/client.c \
+			src/server/ft_errors.c \
+			src/client/get_message.c
 S_FILES = 	src/server/server.c \
 			src/server/ft_errors.c \
 			src/server/get_message.c
