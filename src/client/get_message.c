@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_message.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Myrkskog <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/24 20:57:09 by Myrkskog          #+#    #+#             */
-/*   Updated: 2014/05/25 16:24:13 by Myrkskog         ###   ########.fr       */
+/*   Created: 2014/05/25 19:25:56 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/25 19:26:00 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+
 static char			*ft_exit_gm(char **str)
 {
 	free(*str);

@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.h                                           :+:      :+:    :+:   */
+/*   server_structs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/25 19:25:12 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/25 19:38:11 by sconso           ###   ########.fr       */
+/*   Created: 2014/05/25 19:26:36 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/25 19:27:10 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLIENT_H
-# define CLIENT_H
+#ifndef SERVER_STRUCTS_H
+# define SERVER_STRUCTS_H
 
-# include <irc.h>
+typedef struct			s_clients
+{
+	t_socket			csock;
+	t_sockaddr_in		csin;
+	char				*nickname;
+	char				*chan;
+}						t_clients;
 
-/*
-** client.h
-*/
-void	be_client(char *ip, int port);
-
-/*
-** ft_send.h
-*/
-void	ft_send(int sock, char *message);
-
-/*
-** init.c
-*/
-int		init_connection(char *ip, int port);
-void	init_client(int ac, char **av);
+typedef struct			s_server
+{
+	t_socket			sock;
+	t_sockaddr_in		sin;
+	int					max_clients;
+	int					max;
+	int					actual;
+	t_clients			**cl;
+}						t_server;
 
 #endif
