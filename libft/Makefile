@@ -6,7 +6,7 @@
 #    By: sconso <sconso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/11/19 13:30:01 by sconso            #+#    #+#              #
-#    Updated: 2014/05/23 19:41:46 by sconso           ###   ########.fr        #
+#    Updated: 2014/05/25 07:59:20 by Myrkskog         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -28,7 +28,7 @@ ft_addalphaindlist.c ft_addralphaindlist.c ft_deletefirstdlist.c \
 ft_deletelastdlist.c ft_deleteindlist.c ft_flushdlist.c ft_readdlist.c \
 get_next_line.c ft_strcleanjoin.c
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g -ggdb
 
 SRCDIR = ./src
 

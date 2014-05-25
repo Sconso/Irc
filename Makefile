@@ -6,7 +6,7 @@
 #    By: sconso <sconso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/12 18:13:08 by sconso            #+#    #+#              #
-#    Updated: 2014/05/23 19:48:58 by sconso           ###   ########.fr        #
+#    Updated: 2014/05/25 07:32:27 by Myrkskog         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -15,12 +15,14 @@ S_NAME = server
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-DFLAGS = -pedantic -ansi -g -ggdb
+DFLAGS = -pedantic -g -ggdb
 INC = -I includes/ -I libft/includes/
 LFLAGS = -L libft/ -lft
 
 C_FILES = src/client/client.c
-S_FILES = src/server/server.c
+S_FILES = 	src/server/server.c \
+			src/server/ft_errors.c \
+			src/server/get_message.c
 
 SRCDIR = src/client src/server
 C_SRCDIR = src/client
